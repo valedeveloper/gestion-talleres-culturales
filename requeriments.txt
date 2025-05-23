@@ -1,6 +1,8 @@
-royecto Integrador: Sistema de Registro y Reporte de Talleres 
+Proyecto Integrador: Sistema de Registro y Reporte de Talleres 
 Culturales Comunitarios
+
 SUSTENTACIÓN: 29 DE MAYO EN CLASE.
+
 1. Contexto
 Una casa de la cultura desea implementar un sistema digital para gestionar el registro 
 de participantes en sus talleres culturales. Los talleres incluyen clases de pintura, teatro, 
@@ -11,6 +13,7 @@ su posterior análisis. Todo esto debe realizarse mediante una interfaz gráfica
 estructurada con programación orientada a objetos, y el proyecto debe subirse con 
 control de versiones a GitHub. El trabajo debe realizarse en grupos de máximo tres 
 personas.
+
 2. Requerimientos técnicos
 Módulos obligatorios a utilizar:
 - tkinter: para la interfaz gráfica de registro.
@@ -18,7 +21,9 @@ Módulos obligatorios a utilizar:
 - matplotlib: para generar gráficos estadísticos.
 - POO: todo el código debe estar organizado en clases.
 - GitHub: subir el proyecto completo con control de versiones.
-3. Descripción del Proyecto
+
+3. Descripción del Proyecto:
+
 3.1 Interfaz Gráfica Inicial (Tkinter)
 Debe permitir:
 - Registro del nombre del participante, edad, taller inscrito, mes de participación y 
@@ -29,10 +34,12 @@ cantidad de clases a las que asistió. El valor de cada clase depende del taller
  Danza = $7.000
 - Botones para: registrar nuevo participante, modificar datos, eliminar participante, 
 mostrar todos los registros y generar reportes.
+
 3.2 Lógica Interna (POO)
 Se deben implementar al menos dos clases principales:
 - Clase Participante
 - Clase Analisis
+
 3.3 Análisis y Visualización (Pandas + Matplotlib)
 Debe incluir un reporte con:
 - Total de participantes registrados.
