@@ -44,7 +44,7 @@ entry_id_participante = tk.Entry(base)
 entry_id_participante.grid(row=5, column=1, padx=5, pady=5)
 
 # Área de texto para mostrar participantes
-text_area = tk.Text(base, height=15, width=80)
+text_area = tk.Text(base, height=15, width=120)
 text_area.grid(row=6, column=0, columnspan=4, padx=5, pady=10)
 
 # Funciones
@@ -117,9 +117,9 @@ def limpiar_campos():
 
 # Botones
 tk.Button(base, text="Registrar Participante", bg="#90EE90", command=agregar_participante).grid(row=8, column=0, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Editar Participante", bg="#ADD8E6", command=editar_participante).grid(row=8, column=1, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Eliminar Participante", bg="#ADD8E6", command=eliminar_participante).grid(row=10, column=2, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Mostrar Participantes", bg="#ADD8E6", command=mostrar_participantes).grid(row=8, column=3, columnspan=2, padx=5, pady=5)
+tk.Button(base, text="Editar Participante", bg="#ADD8E6", command=editar_participante).grid(row=9, column=0, columnspan=2, padx=5, pady=5)
+tk.Button(base, text="Eliminar Participante", bg="#ADD8E6", command=eliminar_participante).grid(row=8, column=1, columnspan=2, padx=5, pady=5)
+tk.Button(base, text="Mostrar Participantes", bg="#ADD8E6", command=mostrar_participantes).grid(row=9, column=1, columnspan=2, padx=5, pady=5)
 
 
 
