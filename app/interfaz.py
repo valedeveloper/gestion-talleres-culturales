@@ -29,7 +29,6 @@ entry_taller_inscrito.set(opciones_taller[0])  # Valor por defecto
 menu_taller_inscrito = tk.OptionMenu(base,entry_taller_inscrito, *opciones_taller)
 menu_taller_inscrito.grid(row=2, column=1, padx=5, pady=5)
 
-
 tk.Label(base, text="Mes de participación:", font=negrita).grid(row=3, column=0, padx=5, pady=5)
 entry_mes_participacion = tk.Entry(base)
 entry_mes_participacion.grid(row=3, column=1, padx=5, pady=5)
@@ -37,7 +36,6 @@ entry_mes_participacion.grid(row=3, column=1, padx=5, pady=5)
 tk.Label(base, text="Clases asistidas:", font=negrita).grid(row=4, column=0, padx=5, pady=5)
 entry_clases_asistidas = tk.Entry(base)
 entry_clases_asistidas.grid(row=4, column=1, padx=5, pady=5)
-
 
 tk.Label(base, text="Buscar por Id:", font=negrita).grid(row=5, column=0, padx=5, pady=5)
 entry_id_participante = tk.Entry(base)
@@ -89,7 +87,6 @@ def eliminar_participante():
     if not id:
         messagebox.showwarning("Campos vacío", "Por favor ingrese el ID a eliminar.")
         return
-
     resultado=participantes.eliminar_receta_por_id(id)
 
     if resultado:
@@ -120,7 +117,6 @@ tk.Button(base, text="Registrar Participante", bg="#90EE90", command=agregar_par
 tk.Button(base, text="Editar Participante", bg="#ADD8E6", command=editar_participante).grid(row=8, column=1, columnspan=2, padx=5, pady=5)
 tk.Button(base, text="Eliminar Participante", bg="#ADD8E6", command=eliminar_participante).grid(row=10, column=2, columnspan=2, padx=5, pady=5)
 tk.Button(base, text="Mostrar Participantes", bg="#ADD8E6", command=mostrar_participantes).grid(row=8, column=3, columnspan=2, padx=5, pady=5)
-
 
 
 

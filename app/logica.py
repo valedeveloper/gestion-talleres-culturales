@@ -27,21 +27,21 @@ class Participante:
             "id": self.id,
             "nombre": self.nombre,
             "edad": self.edad,
-            "taller": self.taller_inscrito,
-            "mes": self.mes_participacion,
-            "clases asistidas": self.clases_asistidas,
-            "valor clase": clase_precios.get(self.taller_inscrito, 0),
-            "total pagado": self.calcular_pago()
+            "taller_inscrito": self.taller_inscrito,
+            "mes_participacion": self.mes_participacion,
+            "clases_asistidas": self.clases_asistidas,
+            "valor_clase": clase_precios.get(self.taller_inscrito, 0),
+            "total_pagado": self.calcular_pago()
         }
 
-class GestionParticipantes:
-    campos = ["id", "nombre", "edad", "taller", "mes", "clases asistidas", "valor clase", "total pagado"]
 
-    def __init__(self, archivo='participantes.csv'):
+class GestionParticipantes:
+   
+    def __init__(self, archivo='app/participantes.csv'):
         self.archivo = archivo
         self.contador_id = self.obtener_ultimo_id() + 1
-
-   
+        self.campos = ["id", "nombre", "edad", "taller_inscrito", "mes_participacion","clases_asistidas", "valor_clase", "total_pagado"
+]
 
     def mostrar_participantes(self):
         if os.path.isfile(self.archivo):
@@ -51,6 +51,8 @@ class GestionParticipantes:
 
     def añadir_participante(self, nombre, edad, taller_inscrito, mes_participacion, clases_asistidas):
         nuevo = Participante(self.contador_id, nombre, edad, taller_inscrito, mes_participacion, clases_asistidas)
+        participante=nuevo.reporte_participante()
+        print(participante)
         with open(self.archivo, 'a', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=self.campos)
             if os.path.getsize(self.archivo) == 0:
@@ -59,7 +61,6 @@ class GestionParticipantes:
         self.contador_id += 1
     
     def modificar_participante(self, id, nombre, edad, taller_inscrito, mes_participacion, clases_asistidas):
-
         df=self.mostrar_participantes()
         df['id'] = df['id'].astype(str)
         id = str(id)
@@ -71,12 +72,10 @@ class GestionParticipantes:
             df.loc[df['id'] == id, 'clases_asistidas'] = clases_asistidas
 
             df.to_csv(self.archivo, index=False)
-            return True     
-        else:
-            print("ID no encontrado.")
-            return False
-            
+            return True  
         
+        else:
+            return False
     
     def eliminar_receta_por_id(self, id_eliminar):
         df=self.mostrar_participantes()
@@ -90,14 +89,12 @@ class GestionParticipantes:
         else:
             return False
 
-
-    def actualizar_archivo(self):
-        return self.mostrar_participantes()
+    # def actualizar_archivo(self):
+    #     return self.mostrar_participantes()
     
-     
     def obtener_ultimo_id(self):
         if os.path.isfile(self.archivo):
-             df = pd.read_csv(self.archivo)
+             df = self.mostrar_participantes()
              if not df.empty:
                  return df["id"].max()
         return 0
