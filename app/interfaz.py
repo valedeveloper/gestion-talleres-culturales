@@ -29,6 +29,7 @@ entry_taller_inscrito.set(opciones_taller[0])  # Valor por defecto
 menu_taller_inscrito = tk.OptionMenu(base,entry_taller_inscrito, *opciones_taller)
 menu_taller_inscrito.grid(row=2, column=1, padx=5, pady=5)
 
+
 tk.Label(base, text="Mes de participación:", font=negrita).grid(row=3, column=0, padx=5, pady=5)
 entry_mes_participacion = tk.Entry(base)
 entry_mes_participacion.grid(row=3, column=1, padx=5, pady=5)
@@ -37,12 +38,13 @@ tk.Label(base, text="Clases asistidas:", font=negrita).grid(row=4, column=0, pad
 entry_clases_asistidas = tk.Entry(base)
 entry_clases_asistidas.grid(row=4, column=1, padx=5, pady=5)
 
+
 tk.Label(base, text="Buscar por Id:", font=negrita).grid(row=5, column=0, padx=5, pady=5)
 entry_id_participante = tk.Entry(base)
 entry_id_participante.grid(row=5, column=1, padx=5, pady=5)
 
 # Área de texto para mostrar participantes
-text_area = tk.Text(base, height=15, width=80)
+text_area = tk.Text(base, height=15, width=120)
 text_area.grid(row=6, column=0, columnspan=4, padx=5, pady=10)
 
 # Funciones
@@ -87,6 +89,7 @@ def eliminar_participante():
     if not id:
         messagebox.showwarning("Campos vacío", "Por favor ingrese el ID a eliminar.")
         return
+
     resultado=participantes.eliminar_receta_por_id(id)
 
     if resultado:
@@ -112,11 +115,26 @@ def limpiar_campos():
     entry_mes_participacion.delete(0, tk.END)
     entry_clases_asistidas.delete(0, tk.END)
 
+def mostrar_busqueda():
+    id = entry_id_participante.get().strip()
+    if not id:
+        messagebox.showwarning("Falta ID", "Por favor ingresa un ID para buscar.")
+        return
+    resultado = participantes.buscar_participante(id)
+    text_area.delete("1.0", tk.END)
+    text_area.insert(tk.END, resultado)
+
+#Frame para los botones
+frame_botones = tk.Frame(base, bg="#E1E1E1", padx=20, pady=20)
+frame_botones.grid(row=9, column=0, columnspan=2, padx=5, pady=5)
 # Botones
-tk.Button(base, text="Registrar Participante", bg="#90EE90", command=agregar_participante).grid(row=8, column=0, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Editar Participante", bg="#ADD8E6", command=editar_participante).grid(row=8, column=1, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Eliminar Participante", bg="#ADD8E6", command=eliminar_participante).grid(row=10, column=2, columnspan=2, padx=5, pady=5)
-tk.Button(base, text="Mostrar Participantes", bg="#ADD8E6", command=mostrar_participantes).grid(row=8, column=3, columnspan=2, padx=5, pady=5)
+tk.Button(frame_botones, text="Registrar Participante", bg="#F17134", command=agregar_participante).grid(row=0, column=0, padx=16, pady=5)
+tk.Button(frame_botones, text="Editar Participante", bg="#F17134", command=editar_participante).grid(row=0, column=1, padx=16, pady=5)
+tk.Button(frame_botones, text="Eliminar Participante", bg="#F17134", command=eliminar_participante).grid(row=0, column=2, padx=16, pady=5)
+tk.Button(frame_botones, text="Mostrar Participantes", bg="#F17134", command=mostrar_participantes).grid(row=0, column=3, padx=16, pady=5)
+tk.Button(frame_botones, text="Buscar participante", bg="#F17134", command=mostrar_busqueda).grid(row=0, column=4, padx=16, pady=5)
+
+
 
 
 
