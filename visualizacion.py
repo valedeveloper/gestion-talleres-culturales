@@ -116,15 +116,11 @@ def limpiar_campos():
     entry_clases_asistidas.delete(0, tk.END)
 
 def mostrar_busqueda():
-    subventana = tk.Toplevel(base)  
-    subventana.title("Busqueda")
-    subventana.geometry("300x200")  
     id = entry_id_participante.get().strip()
     if not id:
         messagebox.showwarning("Falta ID", "Por favor ingresa un ID para buscar.")
         return
     resultado = participantes.buscar_participante(id)
-    tk.Label(subventana, text=(resultado) ).pack(pady=20)
     text_area.delete("1.0", tk.END)
     text_area.insert(tk.END, resultado)
 
