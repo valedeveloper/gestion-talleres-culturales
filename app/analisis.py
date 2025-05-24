@@ -34,9 +34,9 @@ class DataAnalyzer:
         max_fila = self.df.loc[self.df['total_pagado'].idxmax()]
         return max_fila
 
-#Gráfico de barras de número de participantes por talle
+#Grafico de barras
     def barras_participante_taller(self):
-        plt.figure(figsize=(8, 6))  # Establece tamaño de figura
+        plt.figure(figsize=(8, 6))
         sns.countplot(
             data=self.df,
             x="taller_inscrito",
@@ -47,29 +47,25 @@ class DataAnalyzer:
         plt.xlabel('Taller Inscrito')
         plt.ylabel('Número de Participantes')
         plt.xticks(rotation=45)
-        plt.tight_layout() 
-        plt.show()
+        plt.tight_layout()
+        return plt.gcf() 
     
   
   
     def histograma_edades(self):
         plt.figure(figsize=(8, 6))
-        
         sns.histplot(
             data=self.df,
             x="edad",
-            bins=range(self.df["edad"].min(), self.df["edad"].max() + 1),  # Un bin por edad exacta
+            bins=range(self.df["edad"].min(), self.df["edad"].max() + 1),
             color="skyblue"
         )
-        
-        # Establecer ticks en X con todos los valores posibles de edad
-        plt.xticks(range(self.df["edad"].min(), self.df["edad"].max() + 1))  
-
+        plt.xticks(range(self.df["edad"].min(), self.df["edad"].max() + 1))
         plt.title('Distribución de Edades de Participantes')
         plt.xlabel('Edad')
         plt.ylabel('Cantidad')
         plt.tight_layout()
-        plt.show()
+        return plt.gcf()
 
 #https://www.geeksforgeeks.org/how-to-create-a-pie-chart-in-seaborn/
     def grafico_circular(self):
@@ -81,11 +77,33 @@ class DataAnalyzer:
             autopct='%1.1f%%', 
             colors=sns.color_palette("pastel") 
         )
-
         plt.title("Distribución de Participantes por Taller")
-        plt.axis("equal")  # Hace que el gráfico sea un círculo perfecto
+        plt.axis("equal")
         plt.tight_layout()
-        plt.show()
+        return plt.gcf() 
+
+    def generar_reporte_completo(self):
+        """Genera un reporte unificado con todas las métricas"""
+        reporte = ""
+        if not self.df.empty:
+            #Resumen
+            buffer = io.StringIO()
+            self.df.info(buf=buffer)
+            reporte = buffer.getvalue() + "\n\n"
+            reporte += self.df.describe(include='all').to_string()
+            
+            reporte += f"\n\n=== Métricas Clave ===\n"
+            reporte += f"Total participantes: {len(self.df)}\n"
+            reporte += f"Promedio de pagos: ${np.mean(self.df['total_pagado']):.2f}\n"
+            
+            taller, cantidad = self.taller_mayor()
+            reporte += f"Taller más popular: {taller} ({cantidad} participantes)\n"
+            
+            participante_max = self.participante_mayor_valor_pagado()
+            reporte += f"Mayor pago: {participante_max['nombre']} (${participante_max['total_pagado']})\n"
+        else:
+            reporte = "No hay datos para analizar."
+        return reporte
 
 
 data = DataAnalyzer("app\participantes.csv") 
@@ -94,4 +112,4 @@ print("El total de participantes es:",data.total_participantes())
 print("El promedio de pagos:",data.promedio_pagos_taller())
 print("El taller mayor es:", data.taller_mayor())
 print("Partcipante con mayoy pago",data.participante_mayor_valor_pagado()["nombre"])
-data.grafico_circular()
+#data.grafico_circular()
