@@ -101,3 +101,12 @@ class GestionParticipantes:
              if not df.empty:
                  return df["id"].max()
         return 0
+    def buscar_participante(self, busqueda):
+      df = pd.read_csv("participantes.csv")
+      df["id"] = df["id"].astype(str)
+      busqueda = str(busqueda)
+      if busqueda in df["id"].values:
+          busqueda_fila = df[df["id"] == busqueda]
+          return busqueda_fila.to_string(index=False)
+      else:
+          return 'No esta registrado ningun usuario con ese id'

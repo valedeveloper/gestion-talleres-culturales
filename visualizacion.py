@@ -8,13 +8,11 @@ participantes = GestionParticipantes()
 # Crear ventana principal
 base = tk.Tk()
 base.title("Gestor de Participantes")
-base.configure(bg="#E1E1E1")
 base.geometry("800x600")
 base.resizable(False, False)
 
 # Fuente en negrita para etiquetas
 negrita = font.Font(weight="bold")
-#frame parte superior
 
 # Entradas
 tk.Label(base, text="Nombre:", font=negrita).grid(row=0, column=0, padx=5, pady=5)
@@ -116,18 +114,32 @@ def limpiar_campos():
     entry_id_participante.delete(0,tk.END)
     entry_mes_participacion.delete(0, tk.END)
     entry_clases_asistidas.delete(0, tk.END)
-def buscar_participante():
-    print ('oe')
+
+def mostrar_busqueda():
+    subventana = tk.Toplevel(base)  
+    subventana.title("Busqueda")
+    subventana.geometry("300x200")  
+    id = entry_id_participante.get().strip()
+    if not id:
+        messagebox.showwarning("Falta ID", "Por favor ingresa un ID para buscar.")
+        return
+    resultado = participantes.buscar_participante(id)
+    tk.Label(subventana, text=(resultado) ).pack(pady=20)
+    text_area.delete("1.0", tk.END)
+    text_area.insert(tk.END, resultado)
 
 #Frame para los botones
 frame_botones = tk.Frame(base, bg="#E1E1E1", padx=20, pady=20)
 frame_botones.grid(row=9, column=0, columnspan=2, padx=5, pady=5)
 # Botones
-tk.Button(frame_botones, text="Registrar Participante", bg="#F17134", command=lambda: print("Participante registrado")).grid(row=0, column=0, padx=16, pady=5)
+tk.Button(frame_botones, text="Registrar Participante", bg="#F17134", command=agregar_participante).grid(row=0, column=0, padx=16, pady=5)
 tk.Button(frame_botones, text="Editar Participante", bg="#F17134", command=editar_participante).grid(row=0, column=1, padx=16, pady=5)
 tk.Button(frame_botones, text="Eliminar Participante", bg="#F17134", command=eliminar_participante).grid(row=0, column=2, padx=16, pady=5)
 tk.Button(frame_botones, text="Mostrar Participantes", bg="#F17134", command=mostrar_participantes).grid(row=0, column=3, padx=16, pady=5)
-tk.Button(frame_botones, text="Buscar participante", bg="#F17134", command=buscar_participante).grid(row=0, column=4, padx=16, pady=5)
+tk.Button(frame_botones, text="Buscar participante", bg="#F17134", command=mostrar_busqueda).grid(row=0, column=4, padx=16, pady=5)
+
+
+
 
 
 # Mostrar recetas automáticamente al cargar
