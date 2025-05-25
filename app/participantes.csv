@@ -1,10 +1,4 @@
 id,nombre,edad,taller_inscrito,mes_participacion,clases_asistidas,valor_clase,total_pagado
-1,val,12,Pintura,1,1,6000,6000
-2,maria,12,Pintura,1,1,6000,6000
-3,va,12,Danza,1,1,7000,7000
-4,Va,2,Danza,1,1,7000,7000
-5,Mariana,12,Pintura,1,1,6000,6000
-6,Xilena,23,Teatro,1,1,8000,8000
-7,Maritany,12,Musica,1,1,10000,10000
-8,uy,12,Danza,1,1,7000,7000
-9,Juan,12,Danza,1,1,7000,7000
+10,Valeria,22,Teatro,1,12,8000,96000
+11,Juan,12,Pintura,12,1,6000,6000
+12,Albert,34,Musica,2,1,6000,6000
