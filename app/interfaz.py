@@ -51,7 +51,6 @@ entry_id_participante.grid(row=5, column=1, padx=5, pady=5)
 text_area = tk.Text(base, height=15, width=120)
 text_area.grid(row=6, column=0, columnspan=4, padx=5, pady=10)
 
-#Funciones
 def agregar_participante():
     nombre = entry_nombre.get().strip()
     edad = entry_edad.get().strip()
@@ -62,7 +61,19 @@ def agregar_participante():
     if not all([nombre, edad, taller_inscrito, mes, clases]):
         messagebox.showwarning("Campos vacíos", "Por favor completa todos los campos.")
         return
-
+    try:
+        all([float(edad), float(mes), float(clases)])
+    except ValueError:
+        messagebox.showerror("Error", "La edad, mes y clases deben ser números.")
+        return
+    
+    if not float(edad)>0:
+        messagebox.showwarning("Aviso", "La edad no puede ser negativo")
+        return
+    if not 1<=float(mes)<=12:
+        messagebox.showwarning("Aviso", "EL mes debe estar entre 1 y 12")
+        return
+    
     participantes.añadir_participante(nombre, edad, taller_inscrito, mes, clases)
     messagebox.showinfo("Éxito", "Participante registrado.")
     mostrar_participantes()
@@ -76,9 +87,22 @@ def editar_participante():
     mes = entry_mes_participacion.get().strip()
     clases = entry_clases_asistidas.get().strip()
 
-    if not all([id,nombre, edad, taller_inscrito, mes, clases]):
+    if not all([nombre, edad, taller_inscrito, mes, clases]):
         messagebox.showwarning("Campos vacíos", "Por favor completa todos los campos.")
         return
+    try:
+        datos = [float(id), float(edad), float(mes), float(clases)]
+    except ValueError:
+        messagebox.showerror("Error", "El id, edad, mes y clases deben ser números.")
+        return
+
+    if not float(edad)>0:
+        messagebox.showwarning("Aviso", "La edad no puede ser negativo")
+        return
+    if not 1<=float(mes)<=12:
+        messagebox.showwarning("Aviso", "EL mes debe estar entre 1 y 12")
+        return
+    
     resultado=participantes.modificar_participante(id,nombre, edad, taller_inscrito, mes, clases)
 
     if resultado:
@@ -89,11 +113,15 @@ def editar_participante():
     mostrar_participantes()
 
 def eliminar_participante():
+
     id=entry_id_participante.get()
     if not id:
         messagebox.showwarning("Campos vacío", "Por favor ingrese el ID a eliminar.")
         return
-
+    if not id.isdigit():
+        messagebox.showwarning("Aviso","El id debe ser un número")
+        return
+    
     resultado=participantes.eliminar_receta_por_id(id)
 
     if resultado:
@@ -223,3 +251,15 @@ if not df_recetas.empty :
 else:
     text_area.insert(tk.END, "No hay Participantes Registrados.")
 base.mainloop()
+
+
+"""
+1. Validaciones en los campos (Validar que haya quedasdo ok, lo probé y me da :])
+2. Ver función mostrar_busqueda, ya que en la lógica no existe  resultado = participantes.buscar_participante(id)
+3. Mostrar las gráficas
+4. Probar todos los botones y hacer pruebas. Colocar las funciones que fallan para ajustarlo
+
+
+
+
+"""
