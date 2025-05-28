@@ -36,12 +36,17 @@ class Participante:
 
 
 class GestionParticipantes:
-   
-    def __init__(self, archivo='app/participantes.csv'):
+    def __init__(self, archivo='participantes.csv'):
         self.archivo = archivo
+        self.campos = ["id", "nombre", "edad", "taller_inscrito", "mes_participacion", "clases_asistidas", "valor_clase", "total_pagado"]
+        ##Valida que exista base de datos si no esta la crea
+        if not os.path.isfile(self.archivo):
+            with open(self.archivo, 'w', newline='', encoding='utf-8') as f:
+                ## https://stackoverflow.com/questions/2918362/writing-string-to-a-file-on-a-new-line-every-time
+                writer = csv.DictWriter(f, fieldnames=self.campos)
+                writer.writeheader()
+                
         self.contador_id = self.obtener_ultimo_id() + 1
-        self.campos = ["id", "nombre", "edad", "taller_inscrito", "mes_participacion","clases_asistidas", "valor_clase", "total_pagado"
-]
 
     def mostrar_participantes(self):
         if os.path.isfile(self.archivo):
@@ -98,3 +103,13 @@ class GestionParticipantes:
              if not df.empty:
                  return df["id"].max()
         return 0
+    ##Buscar participante
+    def buscar_participante(self, busqueda):
+      df = pd.read_csv("participantes.csv")
+      df["id"] = df["id"].astype(str)
+      busqueda = str(busqueda)
+      if busqueda in df["id"].values:
+          busqueda_fila = df[df["id"] == busqueda]
+          return busqueda_fila.to_string(index=False)
+      else:
+          return 'No esta registrado ningun usuario con ese id'

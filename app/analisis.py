@@ -6,7 +6,16 @@ import seaborn as sns
 
 class DataAnalyzer:
     def __init__(self, data):
-        self.df = pd.read_csv(data)  
+        try:
+            self.df = pd.read_csv(data)
+        except FileNotFoundError:
+            # Crea la base de datos 
+            self.df = pd.DataFrame(columns=[
+                "id", "nombre", "edad", "taller_inscrito", 
+                "mes_participacion", "clases_asistidas", 
+                "valor_clase", "total_pagado"
+            ]) 
+        
 
     def summary(self):
         buffer = io.StringIO()  
@@ -41,7 +50,7 @@ class DataAnalyzer:
             data=self.df,
             x="taller_inscrito",
             order=self.df["taller_inscrito"].value_counts().index,
-            palette="viridis" 
+            # palette="viridis" 
         )
         plt.title('Número de Participantes por Taller')
         plt.xlabel('Taller Inscrito')
@@ -105,11 +114,12 @@ class DataAnalyzer:
             reporte = "No hay datos para analizar."
         return reporte
 
-
-data = DataAnalyzer("app\participantes.csv") 
-print(data.summary())
-print("El total de participantes es:",data.total_participantes())
-print("El promedio de pagos:",data.promedio_pagos_taller())
-print("El taller mayor es:", data.taller_mayor())
-print("Partcipante con mayoy pago",data.participante_mayor_valor_pagado()["nombre"])
+if __name__ == "__main__": # esta es para poder hacer las pruebas que y que no nos muestre error al ejecutar interfaz ya que estas son solo pruebas
+ ## https://docs.python.org/3/library/__main__.html
+ data = DataAnalyzer("participantes.csv") 
+ print(data.summary())
+ print("El total de participantes es:",data.total_participantes())
+ print("El promedio de pagos:",data.promedio_pagos_taller())
+ print("El taller mayor es:", data.taller_mayor())
+ print("Partcipante con mayor pago",data.participante_mayor_valor_pagado()["nombre"])
 #data.grafico_circular()

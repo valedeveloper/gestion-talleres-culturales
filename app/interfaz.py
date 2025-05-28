@@ -57,7 +57,12 @@ def agregar_participante():
     taller_inscrito = entry_taller_inscrito.get()
     mes = entry_mes_participacion.get().strip()
     clases = entry_clases_asistidas.get().strip()
-
+    
+    if not nombre.replace(" ", "").isalpha():# verifica que sea solo letras y permite los espacios
+     messagebox.showwarning("Campos vacíos", "Digita solo letras en el nombre")
+     ##https://www.w3schools.com/python/ref_string_isalpha.asp 
+     return #Devuelve valor vacio
+    
     if not all([nombre, edad, taller_inscrito, mes, clases]):
         messagebox.showwarning("Campos vacíos", "Por favor completa todos los campos.")
         return
@@ -111,7 +116,7 @@ def editar_participante():
         messagebox.showwarning("Aviso", "No existen registros de este ID")
     limpiar_campos()
     mostrar_participantes()
-
+    
 def eliminar_participante():
 
     id=entry_id_participante.get()
@@ -200,7 +205,7 @@ def mostrar_analisis():
         notebook.add(tab_graficos, text="Gráficos")
         notebook.pack(expand=True, fill=tk.BOTH)
         
-        analyzer = DataAnalyzer("app/participantes.csv")
+        analyzer = DataAnalyzer("participantes.csv")
         reporte = analyzer.generar_reporte_completo()
         text_reporte.insert(tk.END, reporte)
         
